@@ -1,7 +1,7 @@
 # DIY PC Parts Lists Manager
 [中文](README_CH.md) | [日本語](README_JP.md)  
 
-Welcome to the DIY PC Parts List Manager! This application is an Electron-based project designed to manage DIY PC parts lists. You can create, save, and manage multiple parts lists locally, and it also offers printing and screenshot sharing functionalities.
+Welcome to the DIY PC Parts Lists Manager! This application is an Electron-based project designed to manage DIY PC parts lists. You can create, save, and manage multiple parts lists locally, and it also offers printing and screenshot sharing functionalities.
 
 ![logo](./public/img/totem.png)
 
