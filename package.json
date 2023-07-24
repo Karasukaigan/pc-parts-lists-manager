@@ -1,0 +1,20 @@
+{
+  "name": "pc-parts-lists-manager",
+  "version": "1.0.0",
+  "description": "A software application for managing DIY PC parts lists, enabling users to create, save, and manage multiple parts lists locally, with printing and screenshot sharing functionalities.一款用于管理DIY主机配件清单的应用程序，可以在本地创建、保存和管理多个配件清单，并且提供了打印和截图共享功能。",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager . \"DIY主机配置清单管理器\" --platform=win32 --arch=x64 --out=dist/"
+  },
+  "author": "Karasukaigan",
+  "license": "ISC",
+  "dependencies": {
+    "archiver": "^5.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "electron": "^25.3.0",
+    "electron-packager": "^17.1.1"
+  }
+}

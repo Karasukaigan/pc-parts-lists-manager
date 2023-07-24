@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DIY主机配置清单管理器 V</title>
+    <link rel="icon" href="img/totem.png" type="image/x-icon">
+    <link rel="shortcut icon" href="img/totem.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script src="js/info.js"></script>
+    <script src="js/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>DIY主机配置清单</h1>
+
+        <div class="form-container">
+            <label for="filename">选择配置清单：</label>
+            <select id="filename" class="ant-select"></select>
+            <button class="ant-btn" onclick="loadConfig()">加载</button>
+            <button class="delete-btn" onclick="deleteConfig()">删除</button>
+            <button class="ant-btn" onclick="createNewConfig()">创建新配置清单</button>
+        </div>
+
+        <div class="form-container">
+            <button class="ant-btn" onclick="printTable()" disabled>打印</button>
+            <button class="ant-btn" onclick="takeScreenshot()" disabled>截图分享</button>
+            <button class="ant-btn" onclick="exportToCSV()" disabled>导出CSV</button>
+            <button class="ant-btn" onclick="copyJSON()" disabled>复制JSON</button>
+        </div>
+
+        <div class="ant-table-wrapper">
+            <table id="configTable" class="config-table">
+                <thead>
+                    <tr>
+                        <th>配件</th>
+                        <th>型号</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>总价</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer" id="footerText">
+        <a href="https://gitee.com/karasukaigan" target="_blank">© 鸦无量</a>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+
+</html>

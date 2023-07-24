@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DIY主机配置清单管理器 V | 新配置清单</title>
+    <link rel="icon" href="img/totem.png" type="image/x-icon">
+    <link rel="shortcut icon" href="img/totem.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/new.css">
+    <script src="js/info.js"></script>
+</head>
+
+<body>
+    <input type="text" id="listName" placeholder="请填写配置清单名称" class="listName" value="新配置清单" maxlength="26">
+    <a class="back-link" href="/">返回</a>
+
+    <table id="AccessoriesTable">
+        <thead>
+            <tr>
+                <th>配件</th>
+                <th>型号</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" required oninput="updateJson()"></td>
+                <td><input type="text" required oninput="updateJson()"></td>
+                <td><input type="number" min="0" required value="0" oninput="updateJson()"></td>
+                <td><input type="number" min="0" required value="0" oninput="updateJson()"></td>
+                <td><button onclick="removeAccessoriesItem(this)">删除</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <label for="totalPrice">总价格：</label>
+        <span id="totalPrice">0.00元</span>
+        <button onclick="importConfig()">导入配置</button>
+        <button onclick="addAccessoriesItem()">添加配件</button>
+        <button onclick="saveList()" id="saveButton">保存新配置清单</button>
+        <button onclick="clearPage()">清空</button>
+    </div>
+    <input type="file" id="fileInput" style="display: none" accept=".json" onchange="handleFileInput(event)">
+    <div id="errorMessage" style="display: none;" class="error-message">啊啊啊啊啊</div>
+
+    <textarea id="jsonOutput" readonly></textarea>
+
+    <div class="footer">
+        <a href="https://gitee.com/karasukaigan" target="_blank">© 鸦无量</a>
+    </div>
+
+    <script src="js/new.js"></script>
+</body>
+
+</html>
