@@ -1,10 +1,13 @@
 var globalConfigData = {}; // 配置清单的JSON数据
 
+// 截图
 function takeScreenshot() {
     var formContainers = document.querySelectorAll('.form-container');
     formContainers.forEach(function (formContainer) {
         formContainer.style.display = 'none';
     });
+    var footerContainer = document.getElementById('footerText');
+    footerContainer.style.display = 'none';
 
     // 在截图前插入临时文本
     var tableWrapper = document.querySelector('.ant-table-wrapper');
@@ -21,7 +24,7 @@ function takeScreenshot() {
         var h1Element = document.querySelector('h1');
         var tableWrapper = document.querySelector('.ant-table-wrapper');
         var maxWidth = Math.max(h1Element.offsetWidth, tableWrapper.offsetWidth) + 80;
-        var bodyHeight = document.body.scrollHeight + 40;
+        var bodyHeight = document.body.scrollHeight;
 
         // 计算水平居中的偏移量
         var offsetX = (window.innerWidth - maxWidth) / 2;
@@ -45,6 +48,7 @@ function takeScreenshot() {
             formContainers.forEach(function (formContainer) {
                 formContainer.style.display = 'block';
             });
+            footerContainer.style.display = 'block';
         }).catch(function (error) {
             console.error('截图失败：', error);
 

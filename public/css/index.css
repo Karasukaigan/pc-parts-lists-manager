@@ -1,3 +1,7 @@
+body {
+    padding-bottom: 40px;
+}
+
 #app {
     display: flex;
     flex-direction: column;
@@ -27,6 +31,7 @@ h1 {
     background-color: #fff;
     transition: border-color 0.3s;
     box-shadow: none;
+    max-width: 200px;
 }
 
 .ant-btn {

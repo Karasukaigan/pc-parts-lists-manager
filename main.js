@@ -2,7 +2,7 @@ const { app, Menu } = require('electron');
 const { exec } = require('child_process');
 const path = require('path');
 const express = require('express');
-const port = 8023;
+const port = 8023; // 如果出现端口冲突，可以修改成其他的端口号
 
 app.commandLine.appendSwitch('disable-software-rasterizer');
 app.commandLine.appendSwitch('lang', 'zh-CN');

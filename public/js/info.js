@@ -1,7 +1,8 @@
-var version = "1.0.0"; // 版本号
+var version = "1.1.0"; // 版本号
 var defaultAuthor = ""; // 默认作者，用于打印配置清单，可以自行修改
 var defaultNote = ""; // 默认备注，用于打印配置清单，可以自行修改
 
+// 用于显示版本号
 function updatePageTitleWithVersion(version) {
     var currentTitle = document.title;
     var indexV = currentTitle.indexOf('V');

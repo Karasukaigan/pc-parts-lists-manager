@@ -1,4 +1,4 @@
-const { Menu, shell, dialog} = require('electron');
+const { Menu, shell, dialog } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
@@ -52,6 +52,25 @@ const template = [
         ]
     },
     {
+        label: '设置',
+        submenu: [
+            {
+                label: 'main.js',
+                click: () => {
+                    const filePath = path.join(__dirname, '../main.js');
+                    shell.openPath(filePath);
+                }
+            },
+            {
+                label: 'info.js',
+                click: () => {
+                    const filePath = path.join(__dirname, '../public/js/info.js');
+                    shell.openPath(filePath);
+                }
+            }
+        ]
+    },
+    {
         label: '支持',
         submenu: [
             {
@@ -64,6 +83,12 @@ const template = [
                 label: 'Github',
                 click: () => {
                     shell.openExternal('https://github.com/karasukaigan/pc-parts-lists-manager');
+                }
+            },
+            {
+                label: 'Bilibili',
+                click: () => {
+                    shell.openExternal('https://space.bilibili.com/2838092');
                 }
             }
         ]

@@ -10,6 +10,7 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
 th,
@@ -21,6 +22,14 @@ td {
 td input {
     width: 100%;
     border: 0;
+    font-size: 16px;
+}
+
+td button {
+    width: 50px;
+    height: 28px;
+    font-size: 14px;
+    line-height: 14px;
 }
 
 th {
@@ -34,20 +43,20 @@ input {
 }
 
 textarea {
-    margin-top: 20px;
     width: calc(100% - 10px);
-    height: 200px;
+    height: 400px;
     padding: 4px;
     border-radius: 4px;
     border: 1px solid #d9d9d9;
     resize: vertical;
+    margin-bottom: 20px;
 }
 
 .button-container {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .button-container button {
@@ -61,13 +70,13 @@ textarea {
     cursor: pointer;
 }
 
+.button-container button:hover {
+    background-color: #40a9ff;
+}
+
 .button-container button:disabled {
     background-color: #ccc;
     color: #999;
-}
-
-.button-container button:hover {
-    background-color: #40a9ff;
 }
 
 .button-container span {
@@ -94,6 +103,7 @@ textarea {
     padding: 2px;
     margin: 10px 0;
     width: 6em;
+    max-width: 93%;
 }
 
 .footer {
@@ -122,4 +132,8 @@ textarea {
     margin-top: 10px;
     text-align: right;
     color: red;
+}
+
+.hide {
+    display: none;
 }

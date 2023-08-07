@@ -1,3 +1,22 @@
+var table = document.getElementById('AccessoriesTable');
+
+// 显示或隐藏JSON数据
+function toggleJsonVisibility() {
+    var jsonOutput = document.getElementById('jsonOutput');
+    var jsonButton = document.getElementById('jsonVisibilityButton');
+    var buttonContainer = document.getElementById('buttonContainer');
+
+    if (jsonOutput.classList.contains('hide')) {
+        jsonOutput.classList.remove('hide');
+        jsonButton.textContent = '隐藏JSON';
+        buttonContainer.style.marginBottom = '20px';
+    } else {
+        jsonOutput.classList.add('hide');
+        jsonButton.textContent = '显示JSON';
+        buttonContainer.style.marginBottom = '50px';
+    }
+}
+
 // 错误提示
 function showError(message) {
     var errorMessage = document.getElementById('errorMessage');
@@ -11,7 +30,6 @@ function hideError() {
 
 // 计算总价
 function updateTotalPrice() {
-    var table = document.getElementById('AccessoriesTable');
     var totalPrice = 0;
 
     for (var i = 1; i < table.rows.length; i++) {
@@ -49,7 +67,6 @@ function handleFileInput(event) {
     reader.readAsText(file);
 }
 function applyConfig(configData) {
-    const table = document.getElementById('AccessoriesTable');
     while (table.rows.length > 1) {
         table.deleteRow(-1);
     }
@@ -71,7 +88,6 @@ function applyConfig(configData) {
 function adjustInputWidth() {
     const input = document.getElementById('listName');
     const inputValue = input.value;
-    const maxLength = 50;
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     context.font = getComputedStyle(input).font;
@@ -94,31 +110,78 @@ function clearPage() {
 // 添加一行配件
 function addAccessoriesItem(partName = '', item = { '型号': '', '单价': 0, '数量': 0 }) {
     hideError();
-    var table = document.getElementById('AccessoriesTable');
     var row = table.insertRow(-1);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
     var cell4 = row.insertCell(3);
     var cell5 = row.insertCell(4);
+
     cell1.innerHTML = `<input type="text" required value="${partName}" oninput="updateJson()">`;
     cell2.innerHTML = `<input type="text" required value="${item['型号']}" oninput="updateJson()">`;
     cell3.innerHTML = `<input type="number" min="0" required value="${item['单价']}" oninput="updateJson()">`;
     cell4.innerHTML = `<input type="number" min="0" required value="${item['数量']}" oninput="updateJson()">`;
-    cell5.innerHTML = '<button onclick="removeAccessoriesItem(this)">删除</button>';
+    cell5.innerHTML = `
+        <button onclick="moveUp(this)">上移</button>
+        <button onclick="moveDown(this)">下移</button>
+        <button onclick="removeAccessoriesItem(this)">删除</button>
+    `;
 }
 
 // 删除此行配件
 function removeAccessoriesItem(button) {
     hideError();
     var row = button.parentNode.parentNode;
-    row.parentNode.removeChild(row);
+    if (table.rows.length > 2) {
+        row.parentNode.removeChild(row);
+        updateJson();
+    }
+}
+
+function moveUp(button) {
+    var row = button.parentNode.parentNode;
+    var previousRow = row.previousElementSibling;
+    if (previousRow && previousRow.tagName === "TR" && table.rows[0] !== previousRow) {
+        swapRows(row, previousRow);
+    }
+}
+
+function moveDown(button) {
+    var row = button.parentNode.parentNode;
+    var nextRow = row.nextElementSibling;
+    if (nextRow && nextRow.tagName === "TR") {
+        swapRows(row, nextRow);
+    }
+}
+
+function swapRows(row1, row2) {
+    var parent = row1.parentNode;
+    var index1 = Array.prototype.indexOf.call(parent.children, row1);
+    var index2 = Array.prototype.indexOf.call(parent.children, row2);
+
+    if (index1 > index2) {
+        // 交换行的位置
+        row2.replaceWith(row1);
+        parent.insertBefore(row2, row1);
+    } else {
+        // 交换行的位置
+        row1.replaceWith(row2);
+        parent.insertBefore(row1, row2);
+    }
+
+    // 交换输入元素的值
+    var tempValues = [];
+    for (var i = 0; i < row1.cells.length - 1; i++) {
+        var temp = row1.cells[i].querySelector('input').value;
+        row1.cells[i].querySelector('input').value = row2.cells[i].querySelector('input').value;
+        row2.cells[i].querySelector('input').value = temp;
+    }
+
     updateJson();
 }
 
 // 更新JSON
 function updateJson() {
-    var table = document.getElementById('AccessoriesTable');
     var data = {};
     for (var i = 1; i < table.rows.length; i++) {
         var row = table.rows[i];
@@ -139,7 +202,7 @@ function updateJson() {
         }
     }
     var jsonData = JSON.stringify(data, null, 2);
-    document.getElementById('jsonOutput').value = jsonData;
+    document.getElementById('jsonOutput').textContent = jsonData;
 
     updateTotalPrice();
 }
@@ -152,7 +215,6 @@ function saveList() {
         return;
     }
 
-    var table = document.getElementById('AccessoriesTable');
     var isValid = true;
 
     for (var i = 1; i < table.rows.length; i++) {
