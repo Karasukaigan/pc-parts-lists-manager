@@ -6,9 +6,9 @@
 
 Welcome to the DIY PC Parts Lists Manager! This application is an Electron-based project designed to manage DIY PC parts lists. You can create, save, and manage multiple parts lists locally, and it also offers printing and screenshot sharing functionalities.  
 
-已更新至[V1.2.0](#v120)  
+已更新至[V1.2.0](#版本更新)  
 
-Updated to [V1.2.0](#v120)  
+Updated to [V1.2.0](#版本更新)  
 
 ![logo](./public/img/totem.png)  
 
@@ -79,7 +79,17 @@ Updated to [V1.2.0](#v120)
 
 ## 版本更新
 
-### V1.1.0<span id="v110"></span>
+### V1.2.0
+
+1. 添加了“复制文本”按钮，可以当前加载的配置清单一键复制到剪切板，便于分享。
+2. “截图分享”按钮的文本改为“截图”，并且截图不再包含版权信息。
+3. 打包后的EXE文件会显示正确的图标。
+4. 提供“快速开始.json”以便于更快地创建配置清单。
+
+### 待修复的问题（欢迎反馈）
+1. 配置清单名称中包含某些特殊字符会导致该配置清单无法被删除。
+
+### V1.1.0
 
 1. 将“创建配置清单”按钮更名为“新建配置清单”
 2. 修复了截图时出现的元素错位
@@ -91,13 +101,3 @@ Updated to [V1.2.0](#v120)
 8. 在新建配置清单页面添加了显示/隐藏JSON按钮
 9. 将新建配置清单时自定义的配置清单名称长度限制提升至50个字符（但依然不建议使用过长的名称）
 10. 在菜单栏添加了设置菜单，便于直接打开main.js和info.js进行修改
-
-### V1.2.0<span id="v120"></span>
-
-1. 添加了“复制文本”按钮，可以当前加载的配置清单一键复制到剪切板，便于分享。
-2. “截图分享”按钮的文本改为“截图”，并且截图不再包含版权信息。
-3. 打包后的EXE文件会显示正确的图标。
-4. 提供“快速开始.json”以便于更快地创建配置清单。
-
-### 待修复的问题（欢迎反馈）
-1. 配置清单名称中包含某些特殊字符会导致该配置清单无法被删除。
