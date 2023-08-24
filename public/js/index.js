@@ -1,5 +1,55 @@
 var globalConfigData = {}; // 配置清单的JSON数据
 
+// 复制文本
+function copyText() {
+    try {
+        const title = document.getElementById('partsListTitle');
+        const table = document.getElementById('configTable');
+        const rows = table.querySelectorAll('tbody tr');
+        const tfootRow = table.querySelector('tfoot tr');
+        if (rows.length === 0) return;
+
+        let csvContent = title.innerHTML + '\n';
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            const rowData = Array.from(cells).map((cell, index) => {
+                const cellValue = cell.textContent.trim();
+                return index === 2 ? "×" : index === 3 ? cellValue + "个，" : index === 4 ? Math.round(parseFloat(cellValue)) + "元" : index > 0 ? cellValue : cellValue + '：';
+            });
+            csvContent += rowData.join('') + '\n';
+        });
+
+        const tfootCells = tfootRow.querySelectorAll('td');
+        const tfootData = Array.from(tfootCells).map((cell, index) => {
+            const cellValue = cell.textContent.trim();
+            return index === 1 ? cellValue + "元" : cellValue;
+        });
+        csvContent += tfootData.join('') + '\n';
+
+        const textarea = document.createElement('textarea');
+        textarea.value = csvContent;
+        document.body.appendChild(textarea);
+        textarea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        if (successful) {
+            const copyButton = document.querySelector('.ant-btn[onclick="copyText()"]');
+            copyButton.textContent = '复制成功！';
+            copyButton.disabled = true;
+            setTimeout(function () {
+                copyButton.textContent = '复制文本';
+                copyButton.disabled = false;
+            }, 2000);
+        } else {
+            console.error('浏览器不支持execCommand方法或命令执行失败');
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 // 截图
 function takeScreenshot() {
     var formContainers = document.querySelectorAll('.form-container');
@@ -12,9 +62,10 @@ function takeScreenshot() {
     // 在截图前插入临时文本
     var tableWrapper = document.querySelector('.ant-table-wrapper');
     var authorText = document.createElement('div');
-    authorText.textContent = '截图来自DIY主机配置清单管理器 V' + version + ' 由鸦无量开发';
+    // authorText.textContent = '截图来自DIY主机配置清单管理器 V' + version + ' 由鸦无量开发';
+    authorText.textContent = '';
     authorText.style.textAlign = 'center';
-    authorText.style.marginTop = '10px';
+    // authorText.style.marginTop = '10px';
     authorText.style.fontSize = '80%';
     authorText.style.color = 'lightgray';
     tableWrapper.insertAdjacentElement('afterend', authorText);
@@ -204,10 +255,12 @@ function loadConfig() {
     var exportButton = document.querySelector('.ant-btn[onclick="exportToCSV()"]');
     var copyButton = document.querySelector('.ant-btn[onclick="copyJSON()"]');
     var screenshotButton = document.querySelector('.ant-btn[onclick="takeScreenshot()"]');
+    var copyTextButton = document.querySelector('.ant-btn[onclick="copyText()"]');
     printButton.disabled = false;
     exportButton.disabled = false;
     copyButton.disabled = false;
     screenshotButton.disabled = false;
+    copyTextButton.disabled = false;
 
     document.querySelector('h1').innerText = filename;
 

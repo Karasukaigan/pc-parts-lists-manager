@@ -1,4 +1,4 @@
-var version = "1.1.0"; // 版本号
+var version = "1.2.0"; // 版本号
 var defaultAuthor = ""; // 默认作者，用于打印配置清单，可以自行修改
 var defaultNote = ""; // 默认备注，用于打印配置清单，可以自行修改
 

@@ -12,7 +12,7 @@
 
 <body>
     <div id="app">
-        <h1>DIY主机配置清单</h1>
+        <h1 id="partsListTitle">DIY主机配置清单</h1>
 
         <div class="form-container">
             <label for="filename">选择配置清单：</label>
@@ -24,7 +24,8 @@
 
         <div class="form-container">
             <button class="ant-btn" onclick="printTable()" disabled>打印</button>
-            <button class="ant-btn" onclick="takeScreenshot()" disabled>截图分享</button>
+            <button class="ant-btn" onclick="takeScreenshot()" disabled>截图</button>
+            <button class="ant-btn" onclick="copyText()" disabled>复制文本</button>
             <button class="ant-btn" onclick="exportToCSV()" disabled>导出CSV</button>
             <button class="ant-btn" onclick="copyJSON()" disabled>复制JSON</button>
         </div>
