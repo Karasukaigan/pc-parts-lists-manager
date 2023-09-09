@@ -1,31 +1,115 @@
 var table = document.getElementById('AccessoriesTable');
 
+// 强制保存配置清单
+function forceSaveList() {
+    var listName = document.getElementById('listName').value;
+    if (!listName) {
+        listName = "配置清单_" + new Date().getTime();
+    }
+
+    var jsonData = document.getElementById('jsonOutput').value;
+    if (!jsonData) {
+        var listData = JSON.parse(`
+        {
+            "": {
+              "型号": "",
+              "单价": 0,
+              "数量": 0
+            }
+          }
+        `);
+    } else {
+        var listData = JSON.parse(jsonData);
+    }
+
+    var accessoriesListData = {
+        name: listName, // 配置清单名称
+        data: listData // 配置清单数据
+    };
+
+    fetch('/new', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(accessoriesListData)
+    })
+        .then(response => {
+            console.log(accessoriesListData);
+            if (response.ok) {
+                hideError();
+                const forceSaveButton = document.getElementById('forceSaveButton');
+                forceSaveButton.textContent = '保存成功！';
+                forceSaveButton.disabled = true;
+                setTimeout(function () {
+                    forceSaveButton.textContent = '强制保存';
+                    forceSaveButton.disabled = false;
+                }, 2000);
+            } else {
+                showError('配置清单保存失败');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            showError('配置清单保存失败');
+        });
+}
+
 // 显示或隐藏JSON数据
 function toggleJsonVisibility() {
     var jsonOutput = document.getElementById('jsonOutput');
     var jsonButton = document.getElementById('jsonVisibilityButton');
     var buttonContainer = document.getElementById('buttonContainer');
+    var errorMessage = document.getElementById('errorMessage');
+    var forceSaveButton = document.getElementById('forceSaveButton');
 
     if (jsonOutput.classList.contains('hide')) {
         jsonOutput.classList.remove('hide');
         jsonButton.textContent = '隐藏JSON';
-        buttonContainer.style.marginBottom = '20px';
+        forceSaveButton.style.display = 'inline-block';
+        if (errorMessage.style.display == 'none') {
+            buttonContainer.style.marginBottom = '20px';
+        } else {
+            buttonContainer.style.marginBottom = '0';
+            errorMessage.style.marginBottom = '20px';
+        }
     } else {
         jsonOutput.classList.add('hide');
         jsonButton.textContent = '显示JSON';
-        buttonContainer.style.marginBottom = '50px';
+        forceSaveButton.style.display = 'none';
+        if (errorMessage.style.display == 'none') {
+            buttonContainer.style.marginBottom = '50px';
+        } else {
+            buttonContainer.style.marginBottom = '0';
+            errorMessage.style.marginBottom = '50px';
+        }
     }
 }
 
 // 错误提示
 function showError(message) {
+    var buttonContainer = document.getElementById('buttonContainer');
     var errorMessage = document.getElementById('errorMessage');
+    var jsonOutput = document.getElementById('jsonOutput');
     errorMessage.textContent = message;
     errorMessage.style.display = 'block';
+    buttonContainer.style.marginBottom = '0px';
+    if (jsonOutput.classList.contains('hide')) {
+        errorMessage.style.marginBottom = '50px';
+    } else {
+        errorMessage.style.marginBottom = '20px';
+    }
 }
 function hideError() {
+    var buttonContainer = document.getElementById('buttonContainer');
     var errorMessage = document.getElementById('errorMessage');
+    var jsonOutput = document.getElementById('jsonOutput');
     errorMessage.style.display = 'none';
+    if (jsonOutput.classList.contains('hide')) {
+        buttonContainer.style.marginBottom = '50px';
+    } else {
+        buttonContainer.style.marginBottom = '20px';
+    }
 }
 
 // 计算总价
@@ -43,7 +127,7 @@ function updateTotalPrice() {
 }
 
 // 导入配置
-function importConfig() {
+function importList() {
     hideError();
     document.getElementById('fileInput').click();
 }
@@ -58,7 +142,7 @@ function handleFileInput(event) {
             const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, '');
             document.getElementById('listName').value = fileNameWithoutExtension;
             adjustInputWidth();
-            applyConfig(jsonData);
+            applyList(jsonData);
         } catch (error) {
             showError('JSON文件格式错误');
             console.error(error);
@@ -66,7 +150,7 @@ function handleFileInput(event) {
     };
     reader.readAsText(file);
 }
-function applyConfig(configData) {
+function applyList(configData) {
     while (table.rows.length > 1) {
         table.deleteRow(-1);
     }
@@ -104,7 +188,12 @@ window.addEventListener('load', adjustInputWidth);
 
 // 刷新页面
 function clearPage() {
-    window.location.reload();
+    if (confirm("确认清空当前配置清单？")) {
+        window.location.reload();
+    }
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "/refresh", true);
+    xmlHttp.send();
 }
 
 // 添加一行配件

@@ -1,5 +1,18 @@
 var globalConfigData = {}; // 配置清单的JSON数据
 
+// 等宽显示
+function sameWidth() {
+    const sameWidthButton = document.querySelector('.ant-btn[onclick="sameWidth()"]');
+    const tableContainer = document.getElementById('tableContainer');
+    if (tableContainer.classList.contains('ant-table-wrapper')) {
+        tableContainer.classList.remove('ant-table-wrapper');
+        sameWidthButton.textContent = '等宽显示';
+    } else {
+        tableContainer.classList.add('ant-table-wrapper');
+        sameWidthButton.textContent = '关闭等宽显示';
+    }
+}
+
 // 复制文本
 function copyText() {
     try {
@@ -60,7 +73,7 @@ function takeScreenshot() {
     footerContainer.style.display = 'none';
 
     // 在截图前插入临时文本
-    var tableWrapper = document.querySelector('.ant-table-wrapper');
+    var tableWrapper = document.getElementById('tableContainer');
     var authorText = document.createElement('div');
     // authorText.textContent = '截图来自DIY主机配置清单管理器 V' + version + ' 由鸦无量开发';
     authorText.textContent = '';
@@ -73,7 +86,6 @@ function takeScreenshot() {
     setTimeout(function () {
         // 计算截图范围的宽度、高度
         var h1Element = document.querySelector('h1');
-        var tableWrapper = document.querySelector('.ant-table-wrapper');
         var maxWidth = Math.max(h1Element.offsetWidth, tableWrapper.offsetWidth) + 80;
         var bodyHeight = document.body.scrollHeight;
 
@@ -149,7 +161,7 @@ function printTable() {
     });
 
     // 插入临时文本
-    var tableWrapper = document.querySelector('.ant-table-wrapper');
+    var tableWrapper = document.getElementById('tableContainer');
     var configTable = document.querySelector('.config-table');
     var authorText = document.createElement('div');
     authorText.textContent = '作者：' + defaultAuthor;
@@ -203,8 +215,8 @@ function exportToCSV() {
     }
 
     // 获取文件名
-    const selectedConfig = document.getElementById('filename').value;
-    const fileName = `${selectedConfig}.csv`;
+    const selectedListName = document.getElementById('filename').value;
+    const fileName = `${selectedListName}.csv`;
 
     // 创建并下载CSV文件
     const encodedUri = encodeURI(csvContent);
@@ -217,17 +229,17 @@ function exportToCSV() {
 }
 
 // 跳转到创建配置清单页面
-function createNewConfig() {
+function createNewList() {
     window.location.href = '/new';
 }
 
 // 删除指定配置清单
-function deleteConfig() {
-    const selectedConfig = document.getElementById('filename').value;
-    if (selectedConfig) {
-        const confirmDelete = confirm(`确认删除配置清单 ${selectedConfig} 吗？`);
+function deleteList() {
+    const selectedListName = document.getElementById('filename').value;
+    if (selectedListName) {
+        const confirmDelete = confirm(`确认删除配置清单 ${selectedListName} 吗？`);
         if (confirmDelete) {
-            fetch(`/delete?filename=${selectedConfig}`, { method: 'DELETE' })
+            fetch(`/delete?filename=${encodeURIComponent(selectedListName)}`, { method: 'DELETE' })
                 .then(response => {
                     if (response.ok) {
                         location.reload(); // 刷新页面
@@ -239,18 +251,21 @@ function deleteConfig() {
                     console.error(error);
                 });
         }
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", "/refresh", true);
+        xmlHttp.send();
     }
 }
 
 // 加载配置清单
-function loadConfig() {
+function loadList() {
     const filenameInput = document.getElementById('filename');
     const filename = filenameInput.value.trim();
     if (!filename) {
         console.error('配置清单名为空');
         return;
     }
-    
+
     var printButton = document.querySelector('.ant-btn[onclick="printTable()"]');
     var exportButton = document.querySelector('.ant-btn[onclick="exportToCSV()"]');
     var copyButton = document.querySelector('.ant-btn[onclick="copyJSON()"]');

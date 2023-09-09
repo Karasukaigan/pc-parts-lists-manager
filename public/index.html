@@ -17,12 +17,13 @@
         <div class="form-container">
             <label for="filename">选择配置清单：</label>
             <select id="filename" class="ant-select"></select>
-            <button class="ant-btn" onclick="loadConfig()">加载</button>
-            <button class="delete-btn" onclick="deleteConfig()">删除</button>
-            <button class="ant-btn" onclick="createNewConfig()">新建配置清单</button>
+            <button class="ant-btn" onclick="loadList()">加载</button>
+            <button class="delete-btn" onclick="deleteList()">删除</button>
+            <button class="ant-btn" onclick="createNewList()">新建配置清单</button>
         </div>
 
         <div class="form-container">
+            <button class="ant-btn" onclick="sameWidth()">等宽显示</button>
             <button class="ant-btn" onclick="printTable()" disabled>打印</button>
             <button class="ant-btn" onclick="takeScreenshot()" disabled>截图</button>
             <button class="ant-btn" onclick="copyText()" disabled>复制文本</button>
@@ -30,7 +31,7 @@
             <button class="ant-btn" onclick="copyJSON()" disabled>复制JSON</button>
         </div>
 
-        <div class="ant-table-wrapper">
+        <div id="tableContainer">
             <table id="configTable" class="config-table">
                 <thead>
                     <tr>

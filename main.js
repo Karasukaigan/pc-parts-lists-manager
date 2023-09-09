@@ -1,4 +1,4 @@
-const { app, Menu } = require('electron');
+const { app, Menu, BrowserWindow } = require('electron');
 const { exec } = require('child_process');
 const path = require('path');
 const express = require('express');
@@ -37,7 +37,13 @@ app.on('ready', () => {
         console.log(`http://localhost:${port}/`);
     });
 
-    createWindow(port);
+    mainWindow = createWindow(port);
+
+    expressApp.get('/refresh', (req, res) => {
+        mainWindow.blur();  
+        mainWindow.focus();
+        res.send(200);
+    });
 });
 
 app.on('window-all-closed', () => {

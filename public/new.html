@@ -16,7 +16,7 @@
     <table id="AccessoriesTable">
         <thead>
             <tr>
-                <th>配件</th>
+                <th style="width: 130px;">配件</th>
                 <th>型号</th>
                 <th style="width: 100px;">单价</th>
                 <th style="width: 100px;">数量</th>
@@ -41,11 +41,12 @@
     <div class="button-container" style="margin-bottom: 50px;" id="buttonContainer">
         <label for="totalPrice">总价格：</label>
         <span id="totalPrice">0.00元</span>
-        <button onclick="importConfig()">导入配置</button>
-        <button onclick="addAccessoriesItem()">添加配件</button>
-        <button onclick="saveList()" id="saveButton">保存新配置清单</button>
-        <button onclick="clearPage()">清空</button>
-        <button onclick="toggleJsonVisibility()" id="jsonVisibilityButton">显示JSON</button>
+        <button onclick="importList()" class="ant-btn">导入配置</button>
+        <button onclick="addAccessoriesItem()" class="ant-btn">添加配件</button>
+        <button onclick="saveList()" id="saveButton" class="ant-btn">保存新配置清单</button>
+        <button onclick="forceSaveList()" class="delete-btn" id="forceSaveButton" style="display: none;">强制保存</button>
+        <button onclick="clearPage()" class="delete-btn">清空</button>
+        <button onclick="toggleJsonVisibility()" class="ant-btn" id="jsonVisibilityButton">显示JSON</button>
     </div>
     <input type="file" id="fileInput" style="display: none" accept=".json" onchange="handleFileInput(event)">
     <div id="errorMessage" style="display: none;" class="error-message"></div>

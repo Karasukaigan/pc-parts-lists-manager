@@ -5,14 +5,14 @@ const fs = require('fs');
 const jsonRouter = express.Router();
 
 jsonRouter.delete('/', (req, res) => {
-    const selectedConfig = req.query.filename;
+    const selectedListName = req.query.filename;
 
-    if (!selectedConfig) {
-        res.status(400).send('Bad Request');
+    if (!selectedListName) {
+        res.status(400).send('Empty file name');
         return;
     }
 
-    const jsonFilePath = path.join(__dirname, '..', 'public', 'json', `${selectedConfig}.json`);
+    const jsonFilePath = path.join(__dirname, '..', 'public', 'json', `${selectedListName}.json`);
 
     fs.unlink(jsonFilePath, (err) => {
         if (err) {
@@ -21,7 +21,7 @@ jsonRouter.delete('/', (req, res) => {
             return;
         }
 
-        res.status(200).send('Configuration deleted successfully');
+        res.status(200).send('List deleted successfully');
     });
 });
 
