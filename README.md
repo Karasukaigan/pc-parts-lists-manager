@@ -1,6 +1,6 @@
 # DIY主机配置清单管理器（DIY PC Parts Lists Manager）
 
-![主界面](./screenshot/screenshot_1.png)  
+![主界面](./screenshot/screenshot_130_1.png)  
 
 欢迎使用DIY主机配置清单管理器！该应用程序是一个基于Electron的项目，用于管理DIY主机配置清单。你可以在本地创建、保存和管理多个配置清单，并且还提供了打印和截图共享功能。  
 
@@ -19,7 +19,7 @@ Updated to [V1.3.0](#版本更新)
 - 删除指定的配置清单（Delete the specified parts list）
 
 - 创建新的配置清单（Create a new parts list）  
-  ![新配置清单界面](./screenshot/screenshot_2.png)  
+  ![新配置清单界面](./screenshot/screenshot_130_2.png)  
 
 - 计算单个配件的总价格（Calculate the total price of an individual part）
 
